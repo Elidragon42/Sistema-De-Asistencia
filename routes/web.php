@@ -20,6 +20,9 @@ Route::middleware('auth')->group(function () {
     return view('chirps.index');
 })->name('chirps.index');
 
+Route::post('/chirps', function(){
+    return request('message');
+});
 });
 
 require __DIR__.'/auth.php';
