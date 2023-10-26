@@ -17,7 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/chirps', function () {
-    return 'welcome to our chirps page';
+    return view('chirps.index');
 })->name('chirps.index');
 
 });
