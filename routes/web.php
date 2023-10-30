@@ -1,13 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Chirp;
 use Illuminate\Support\Facades\Route;
 
 route::view('/','welcome')->name('welcome');
-
-
-
-
 
 Route::middleware('auth')->group(function () {
     route::view('/dashboard','dashboard')->name('dashboard');
@@ -17,12 +14,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/chirps', function () {
-    return view('chirps.index');
-})->name('chirps.index');
+        return view('chirps.index');
+    })->name('chirps.index');
 
-Route::post('/chirps', function(){
-    return request('message');
-});
+    Route::post('/chirps', function () {
+        Chirp::create([
+            'message' => request ('message'),
+            'user_id' => auth()->id(),
+        ]);
+
+        return to_route('chirps.index');
+
+    });
+    
 });
 
 require __DIR__.'/auth.php';
